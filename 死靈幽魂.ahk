@@ -1,4 +1,4 @@
-﻿;#IfWinActive, Path of Exile
+;#IfWinActive, Path of Exile
 #SingleInstance force
 #NoEnv ; Recommended for performance and compatibility with future AutoHotkey releases.
 #Persistent ; Stay open in background
@@ -39,16 +39,16 @@ global ACTIVATED := false
 global LessensDamage_Expire := true
 ;============================== 動態設置 ==============================
 ; 傳送卷軸設定
-global PortalScroll_X=1860
-global PortalScroll_Y=620
+global PortalScroll_X=1877
+global PortalScroll_Y=824
 ; 瀕血喝水設定
 global LowLife_X := 95
 global LowLife_Y := 1004
-global LowLife_Color := 0x140E75
+global LowLife_Color := 0x120E75
 ; 減傷喝水設定
 global LessensDamage_X := 95
 global LessensDamage_Y := 884
-global LessensDamage_Color := 0x251E56
+global LessensDamage_Color := 0x241E53
 global LessensDamage_CD := 4800
 
 
@@ -73,26 +73,30 @@ global LessensDamage_CD := 4800
 
 ; 當瀕血(35%)時，按 1 喝紅水
 Flask_when_LowLife(){
-    PixelGetColor, color, LowLife_X, LowLife_Y
-    if(color != LowLife_Color){
-        Send, {1}
-        Sleep 150
-    }
+	if WinActive("Path of Exile"){
+		PixelGetColor, color, LowLife_X, LowLife_Y
+		if(color != LowLife_Color){
+			Send, {1}
+			Sleep 4000
+		}
+	}
     return
 }
 
 ; 當血量低於 95% 時，按 23 喝堅岩藥劑(2)與翠玉藥劑(3)
 Flask_when_DamgeTaken(){
-    PixelGetColor, color, LessensDamage_X, LessensDamage_Y
-    if(color != LessensDamage_Color) and (LessensDamage_Expire){
-        Send, {2}
-        Random, rand, 10, 50
-        Sleep rand
-        Send, {3}
+	if WinActive("Path of Exile"){
+		PixelGetColor, color, LessensDamage_X, LessensDamage_Y
+		if(color != LessensDamage_Color) and (LessensDamage_Expire){
+			Send, {2}
+			Random, rand, 10, 50
+			Sleep rand
+			Send, {3}
 
-        LessensDamage_Expire := false
-        SetTimer, WaitForFlaskCD, 4850
-    }
+			LessensDamage_Expire := false
+			SetTimer, WaitForFlaskCD, 4850
+		}
+	}
     return
 }
 
