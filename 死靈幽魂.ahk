@@ -1,4 +1,4 @@
-;#IfWinActive, Path of Exile
+﻿;#IfWinActive, Path of Exile
 #SingleInstance force
 #NoEnv ; Recommended for performance and compatibility with future AutoHotkey releases.
 #Persistent ; Stay open in background
@@ -43,8 +43,8 @@ global PortalScroll_X=1877
 global PortalScroll_Y=824
 ; 瀕血喝水設定
 global LowLife_X := 95
-global LowLife_Y := 1004
-global LowLife_Color := 0x120E75
+global LowLife_Y := 1007
+global LowLife_Color := 0x120D6E
 ; 減傷喝水設定
 global LessensDamage_X := 95
 global LessensDamage_Y := 884
@@ -77,7 +77,7 @@ Flask_when_LowLife(){
 		PixelGetColor, color, LowLife_X, LowLife_Y
 		if(color != LowLife_Color){
 			Send, {1}
-			Sleep 4000
+			Sleep 2000
 		}
 	}
     return
@@ -109,13 +109,11 @@ Flask_when_DamgeTaken(){
     LButtonIsPressed := true
     SetTimer, WaitLButtonRelease, 500
     return
-
 ; 放開左鍵，重設計時器
 ~LButton Up::
     SetTimer, WaitLButtonRelease, Off
     LButtonIsPressed := false
     return
-
 ; 按住左鍵超過 0.5 秒，使用水銀藥劑(5)
 WaitLButtonRelease(){
     while(LButtonIsPressed){
