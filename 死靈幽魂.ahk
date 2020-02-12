@@ -2,7 +2,7 @@
 #SingleInstance force
 #NoEnv ; Recommended for performance and compatibility with future AutoHotkey releases.
 #Persistent ; Stay open in background
-#MaxThreadsPerHotkey 2
+#MaxThreadsPerHotkey 1
 
 ;========================== 技能面板配置 ============================
 ; 技能配置
@@ -29,7 +29,8 @@
 ; 自動喝水是檢測血量的顏色是否異常 (不是紅色)，所以黑暗挖礦不適用自動喝水
 ;============================== To-Do ==============================
 ; 把第一行註解拿到才能只在 POE 裡運行腳本
-; 需要測試移動使用水銀藥劑的各種狀態
+; 給定偵測 Buff icon 的矩形座標
+; 測試水銀藥劑的 icon 能不能成功在遊戲內抓到
 ;============================== 開發者備註 ==============================
 ; 背包欄位 = 12x5
 ; 背包左上角的框框: 1266, 587
@@ -54,18 +55,24 @@
 global ACTIVATED := false
 global LessensDamage_Expire := true
 ;============================== 動態設置 ==============================
-; 傳送卷軸設定
+; 傳送卷軸座標設定
 global PortalScroll_X=1877
 global PortalScroll_Y=824
-; 瀕血喝水設定
+; 瀕血喝水座標設定
 global LowLife_X := 95
 global LowLife_Y := 1007
 global LowLife_Color := 0x120D6E
-; 減傷喝水設定
+; 減傷喝水座標設定
 global LessensDamage_X := 95
 global LessensDamage_Y := 884
 global LessensDamage_Color := 0x241E53
 global LessensDamage_CD := 4800
+; Buff 偵測設定
+global BuffIconRange_P1_X := 544
+global BuffIconRange_P1_Y := 179
+global BuffIconRange_P2_X := 756
+global BuffIconRange_P2_Y := 391
+global QuickSliver := Quicksilver_Flask_status_icon.png
 
 
 ; 腳本啟用與關閉，快捷鍵: End
@@ -116,31 +123,19 @@ Flask_when_DamgeTaken(){
     return
 }
 
-/*
 ; 當移動(左鍵)超過 0.5 秒，使用水銀藥劑(5)
-; 按下左鍵，開始計時 0.5 秒
 ~LButton::
-    if LButtonIsPressed
-        return
-    LButtonIsPressed := true
-    SetTimer, WaitLButtonRelease, 500
-    return
-; 放開左鍵，重設計時器
-~LButton Up::
-    SetTimer, WaitLButtonRelease, Off
-    LButtonIsPressed := false
-    return
-; 按住左鍵超過 0.5 秒，使用水銀藥劑(5)
-WaitLButtonRelease(){
-    while(LButtonIsPressed){
-        Send {5}
-        Sleep 4800
+    KeyWait, a, T0.5
+    if(ErrorLevel){
+        if WinActive("Path of Exile"){
+            ImageSearch, , , BuffIconRange_P1_X, BuffIconRange_P1_Y, BuffIconRange_P2_X, BuffIconRange_P2_Y, QuickSliver
+            if(ErrorLevel){
+                Send {5}
+                Sleep, 4800
+            }
+        }
     }
     return
-}
- */
-
-
 
 ; 當使用暗影迷蹤(Q)，自動施放骸骨鎧甲(側後鍵)與瓦爾優雅(中鍵)
 ~Q::
