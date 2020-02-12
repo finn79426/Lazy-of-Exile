@@ -81,6 +81,12 @@ global BuffIconRange_P1_Y := 179
 global BuffIconRange_P2_X := 756
 global BuffIconRange_P2_Y := 391
 global QuickSliver := Quicksilver_Flask_status_icon.png
+; 自動清包設定
+global IgnoreGrids := [59, 60]
+global Inventory_Grid1_X := 22 ; 1296
+global Inventory_Grid1_Y := 166 ; 613
+global Offset_X := 53
+global Offset_Y := 54
 
 
 ; 腳本啟用與關閉，快捷鍵: End
@@ -159,8 +165,7 @@ Flask_when_DamgeTaken(){
 		PixelGetColor, color, LessensDamage_X, LessensDamage_Y
 		if(color != LessensDamage_Color) and (LessensDamage_Expire){
 			Send, {2}
-			Random, rand, 10, 50
-			Sleep rand
+			RandomSleep(10,50)
 			Send, {3}
 
 			LessensDamage_Expire := false
@@ -195,7 +200,7 @@ Flask_when_DamgeTaken(){
     }
     return
 
-/*
+
 ; 全自動歸倉模式
 F3::
     BlockInput On
@@ -216,7 +221,8 @@ F3::
             ; Parse the item name....
             ; Send {NumN} to switch Stash Tab...
             ;Send {Ctrl Down}{Click}{Ctrl Up}
-
+            ;Send {Click}
+            RandomSleep(10, 20)
             Grid_Y := Inventory_Grid1_Y + (Offset_Y * A_Index)
         }
         Grid_X := Inventory_Grid1_X + (Offset_X * A_Index)
@@ -225,13 +231,19 @@ F3::
     MouseMove %MouseX%, %MouseY%, 0
     BlockInput Off
     return
- */
 
 ;============================== Sub-Functions ==============================
 RemoveToolTip(){
     SetTimer, RemoveToolTip, Off
     ToolTip
     return
+}
+
+RandomSleep(min,max){
+	Random, r, %min%, %max%
+	r:=floor(r/Speed)
+	Sleep %r%
+	return
 }
 
 ; 避免減傷水在有效時間內重複喝，且異步執行不會卡其他更重要的 Threads (例如瀕血喝水)
