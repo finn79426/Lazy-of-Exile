@@ -19,6 +19,9 @@
 ;============================== 邏輯 ==============================
 ; 按 End 鍵啓動此腳本，進入打怪狀態
 ; 按 Alt+Q 鍵開啓傳送門
+; 按 F5 從城鎮進入傳送處
+; 按 F6 暫離模式
+; 按 F7 修正錯位
 ; 當瀕血(35%)時，按 1 喝紅水
 ; 當血量低於 95% 時，按 23 喝堅岩藥劑(2)與翠玉藥劑(3)
 ; 當移動(左鍵)超過 0.5 秒，使用水銀藥劑(5)
@@ -31,7 +34,9 @@
 ; 把第一行註解拿到才能只在 POE 裡運行腳本
 ; 給定偵測 Buff icon 的矩形座標
 ; 測試水銀藥劑的 icon 能不能成功在遊戲內抓到
-;============================== 開發者備註 ==============================
+; 添加自動清背包，把東西丟到倉庫的功能
+; 分離角色打怪專用與通用腳本，通用腳本功能包含: 自動喝水銀、快速開傳送門、快速指令(藏身處)
+;============================== 開發者筆記 ==============================
 ; 背包欄位 = 12x5
 ; 背包左上角的框框: 1266, 587
 ; 背包右下角的框框: 1910, 854
@@ -91,6 +96,45 @@ global QuickSliver := Quicksilver_Flask_status_icon.png
         Flask_when_LowLife()
         Flask_when_DamgeTaken()
     }
+    return
+
+; 按 F5 從城鎮進入藏身處
+F5::
+    BlockInput On
+    oldClip := clipboard
+    clipboard := "/hideout"
+    Send {Enter}
+    Sleep 2
+    Send ^v
+    Send {Enter}
+    clipboard := oldClip
+    BlockInput Off
+    return
+
+; 按 F6 暫離模式
+F6::
+    BlockInput On
+    oldClip := clipboard
+    clipboard := "/afk"
+    Send {Enter}
+    Sleep 2
+    Send ^v
+    Send {Enter}
+    clipboard := oldClip
+    BlockInput Off
+    return
+
+; 按 F7 修正錯位
+F7::
+    BlockInput On
+    oldClip := clipboard
+    clipboard := "/oos"
+    Send {Enter}
+    Sleep 2
+    Send ^v
+    Send {Enter}
+    clipboard := oldClip
+    BlockInput Off
     return
 
 
