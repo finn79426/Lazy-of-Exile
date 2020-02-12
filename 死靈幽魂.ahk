@@ -35,6 +35,9 @@
 ; 給定偵測 Buff icon 的矩形座標
 ; 測試水銀藥劑的 icon 能不能成功在遊戲內抓到
 ; 添加自動清背包，把東西丟到倉庫的功能
+;   測試不判斷物品名稱的清包
+;   開發清包暫停鍵
+;   開發半自動清包，適用於只需要快速找到單一物品所需要放置的倉庫頁位置
 ; 分離角色打怪專用與通用腳本，通用腳本功能包含: 自動喝水銀、快速開傳送門、快速指令(藏身處)
 ;============================== 開發者筆記 ==============================
 ; 背包欄位 = 12x5
@@ -192,6 +195,38 @@ Flask_when_DamgeTaken(){
     }
     return
 
+/*
+; 全自動歸倉模式
+F3::
+    BlockInput On
+    MouseGetPos MouseX, MouseY, 0
+    Grid_X := Inventory_Grid1_X
+    Grid_Y := Inventory_Grid1_Y
+    CurrentGrid := 0
+    Loop 12{
+        Loop 5{
+            MouseMove %Grid_X%, %Grid_Y%, 0
+            CurrentGrid++
+
+            if(HasVal(IgnoreGrids, CurrentGrid)){
+                continue
+            }
+
+            ;Send ^c
+            ; Parse the item name....
+            ; Send {NumN} to switch Stash Tab...
+            ;Send {Ctrl Down}{Click}{Ctrl Up}
+
+            Grid_Y := Inventory_Grid1_Y + (Offset_Y * A_Index)
+        }
+        Grid_X := Inventory_Grid1_X + (Offset_X * A_Index)
+        Grid_Y := Inventory_Grid1_Y
+    }
+    MouseMove %MouseX%, %MouseY%, 0
+    BlockInput Off
+    return
+ */
+
 ;============================== Sub-Functions ==============================
 RemoveToolTip(){
     SetTimer, RemoveToolTip, Off
@@ -205,6 +240,15 @@ WaitForFlaskCD(){
     return
 }
 
+; 字典判斷，適用於清包功能
+HasVal(haystack, needle) {
+	if !(IsObject(haystack)) || (haystack.Length() = 0)
+		return 0
+	for index, value in haystack
+		if (value = needle)
+			return index
+	return 0
+}
 
 ;==================================================================
 
