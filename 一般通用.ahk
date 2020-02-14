@@ -17,7 +17,7 @@ SetWorkingDir %A_ScriptDir%
 ; 當移動(左鍵)超過 0.8 秒，使用水銀藥劑(5)
 ;   水銀增益狀態下，不會再使用水銀藥劑
 ; 按 Alt+Q 鍵開啓傳送門
-; 按 Z 回到倉庫第一頁
+; 按 F4 回到倉庫第一頁
 ; 按 F2 將物品放到倉庫
 ;   使用前請先按 Z 進行重設避免出問題
 ; 按 F3 清理背包
@@ -133,18 +133,6 @@ Sell := ["豐裕牌組"]
 	BlockInput Off
 	return
 
-~z::
-ResetToTab0:
-    Keywait, z
-    BlockInput On
-    Loop %MaximumTab%{
-        Send {Left}
-        RandomSleep(56,68)
-    }
-    CurrentTab := 0
-    BlockInput Off
-    return
-
 ; 當前物品自動歸倉
 F2::
     Keywait, F2
@@ -191,6 +179,19 @@ F3::
 
     clipboard := oldClip
     MouseMove xx, yy
+    BlockInput Off
+    return
+
+; 回到倉庫第一頁
+~F4::
+ResetToTab0:
+    Keywait, F4
+    BlockInput On
+    Loop %MaximumTab%{
+        Send {Left}
+        RandomSleep(56,68)
+    }
+    CurrentTab := 0
     BlockInput Off
     return
 
