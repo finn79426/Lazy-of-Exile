@@ -238,6 +238,10 @@ F7::
     BlockInput Off
     return
 
+F12::
+    ToolTip, 按 Alt+Q 鍵開啓傳送門`n按 F4 回到倉庫第一頁`n按 F2 將物品放到倉庫`n使用前請先按 Z 進行重設避免出問題`n按 F3 清理背包`n按 F5 從城鎮進入藏身處`n按 F6 暫離模式`n按 F7 修正錯位`n按 F12 顯示快截鍵列表
+    SetTimer, RemoveToolTip, 5000
+
 
 ;============================== Sub-Functions ==============================
 ; 自動歸倉主程式
@@ -311,5 +315,11 @@ HasVal(haystack, needle) {
 RandomSleep(min,max) {
     Random, rand, %min%, %max%
     Sleep %rand%
+    return
+}
+
+RemoveToolTip(){
+    SetTimer, RemoveToolTip, Off
+    ToolTip
     return
 }
