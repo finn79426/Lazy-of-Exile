@@ -15,10 +15,14 @@ SetWorkingDir %A_ScriptDir%
 
 ;============================== 功能 ==============================
 ; 按 Alt+Q 鍵開啓傳送門
+; 按 Z 回到倉庫第一頁 (作爲重設使用)
 ; 按 F3 清理背包
 ; 按 F5 從城鎮進入傳送處
 ; 按 F6 暫離模式
 ; 按 F7 修正錯位
+;============================== 備註 ==============================
+; 爲了避免太容易出 Bug 或誤判，所有熱鍵都是 Single Thread
+;   代表當某個功能正在執行時，沒辦法暫停，只能等它跑完 (例如背包全部清空)
 ;============================== To-Do ==============================
 ; 把第一行註解拿到才能只在 POE 裡運行腳本
 ; 給定偵測 Buff icon 的矩形座標
@@ -30,7 +34,6 @@ SetWorkingDir %A_ScriptDir%
 ;   開發半自動清包，適用於只需要快速找到單一物品所需要放置的倉庫頁位置
 ;============================== 靜態設置 ==============================
 global CurrentTab = 0
-global InventoryCleaning = false
 ;============================== 動態設置 ==============================
 ; 傳送卷軸座標設定
 global PortalScroll_X=1877
@@ -175,6 +178,17 @@ F7::
 
 ; 當前物品自動歸倉
 F2::
+    Keywait, F2
+    BlockInput On
+    ; Backup clipboard
+    ; Send ^c
+    ; Parse the item name....
+    ; Send {NumN} to switch Stash Tab...
+    ; Send {Click}
+    Send {Ctrl Down}{Click}{Ctrl Up}
+    RandomSleep(10, 20)
+    ; Recovery clipboard
+    BlockInput Off
     return
 
 ; 背包全部自動歸倉
