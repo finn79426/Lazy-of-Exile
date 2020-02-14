@@ -115,29 +115,29 @@ Flask_when_DamgeTaken(){
 ; 按 Alt+E 切換靈魂奉獻技能寶石
 !E::
     Keywait, Alt
-	BlockInput On
+  	BlockInput On
     MouseGetPos xx, yy
 
-	Send {i}
+  	Send {i}
     RandomSleep(56,68)
 
-    MouseMove %Gem1X%, %Gem1Y%
+    MouseMove %Gem1_X%, %Gem1_Y%
     RandomSleep(56,68)
     Click, Right
-	RandomSleep(56,68)
+  	RandomSleep(56,68)
 
-    MouseMove %Gem2X%, %Gem2Y%
-	RandomSleep(56,68)
-	Click
-	RandomSleep(56,68)
+    MouseMove %Gem2_X%, %Gem2_Y%
+  	RandomSleep(56,68)
+  	Click
+  	RandomSleep(56,68)
 
-    MouseMove %Gem1X%, %Gem1Y%
-	RandomSleep(56,68)
-	Click
-	RandomSleep(56,68)
+    MouseMove %Gem1_X%, %Gem1_Y%
+  	RandomSleep(56,68)
+  	Click
+  	RandomSleep(56,68)
 
     Send {i}
-	MouseMove, xx, yy, 0
+  	MouseMove, xx, yy, 0
     BlockInput Off
 
 ;============================== Sub-Functions ==============================
@@ -147,11 +147,10 @@ RemoveToolTip(){
     return
 }
 
-RandomSleep(min,max){
-	Random, r, %min%, %max%
-	r:=floor(r/Speed)
-	Sleep %r%
-	return
+RandomSleep(min,max) {
+    Random, rand, %min%, %max%
+    Sleep %rand%
+    return
 }
 
 ; 避免減傷水在有效時間內重複喝，且異步執行不會卡其他更重要的 Threads (例如瀕血喝水)
