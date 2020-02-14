@@ -41,9 +41,6 @@ SetWorkingDir %A_ScriptDir%
 ; 按 Alt+E 切換靈魂奉獻技能寶石，用於召喚召喚物
 ;================================ 備註 ================================
 ; 自動喝水是檢測血量的顏色是否異常 (血量不是紅色就會喝)，所以黑暗挖礦不適用自動喝水
-;================================ To-Do ================================
-; 當按下旋風斬(右鍵)時，自動施放號召(側前鍵)
-; 當旋風斬(右鍵)超過 1 秒，使用迷霧藥劑(4)
 ;=============================== 靜態設置 ==============================
 global ACTIVATED := false
 global LessensDamageBuff_Expired := true
@@ -116,6 +113,17 @@ Flask_when_DamgeTaken(){
 	}
     return
 }
+
+~RButton::
+	Send, {XButton1}		; 當按下旋風斬(右鍵)時，自動施放號召(側前鍵)
+	KeyWait, RButton, T1	; 當旋風斬(右鍵)超過 1 秒，使用迷霧藥劑(4)
+	Check_if_Still_Holding:
+	if(ErrorLevel){
+		Send {4}
+		KeyWait, RButton, T6
+		gosub, Check_if_Still_Holding
+	}
+	return
 
 ; 當使用暗影迷蹤(Q)，自動施放骸骨鎧甲(側後鍵)與瓦爾優雅(中鍵)
 ~Q::
