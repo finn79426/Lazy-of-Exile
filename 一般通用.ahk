@@ -103,16 +103,17 @@ Sell := ["豐裕牌組"]
 */
 ~LButton::
     KeyWait, LButton, T0.8
-    ; Check if still holding
+    Check_if_Still_Holding:
     if(ErrorLevel){
         if WinActive("Path of Exile"){
             ImageSearch, , , BuffIconRange_P1_X, BuffIconRange_P1_Y, BuffIconRange_P2_X, BuffIconRange_P2_Y, %QuickSliver%
             ; Check if still in buff time
             if(ErrorLevel){
-                ToolTip, %ErrorLevel%
                 Send {5}
+                KeyWait, LButton, T4.8
+                gosub, Check_if_Still_Holding
             }else if(ErrorLevel == 2){
-                MsgBox, Image format error!!!
+                MsgBox, %QuickSliver% format error!!!
             }
         }
     }
