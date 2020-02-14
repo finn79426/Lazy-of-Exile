@@ -17,20 +17,17 @@ SetWorkingDir %A_ScriptDir%
 ; 當移動(左鍵)超過 0.8 秒，使用水銀藥劑(5)
 ;   水銀增益狀態下，不會再使用水銀藥劑
 ; 按 Alt+Q 鍵開啓傳送門
-; 按 Z 回到倉庫第一頁 (作爲重設使用)
+; 按 Z 回到倉庫第一頁
 ; 按 F2 將物品放到倉庫
+;   使用前請先按 Z 進行重設避免出問題
 ; 按 F3 清理背包
-; 按 F5 從城鎮進入傳送處
+; 按 F5 從城鎮進入藏身處
 ; 按 F6 暫離模式
 ; 按 F7 修正錯位
+; 按 F12 顯示快截鍵列表
 ;============================== 備註 ==============================
-; 爲了避免太容易出 Bug 或誤判，所有熱鍵都是 Single Thread
+; 爲了避免太容易出問題，所有熱鍵都是 Single Thread
 ;   代表當某個功能正在執行時，沒辦法暫停，只能等它跑完 (例如背包全部清空)
-;============================== To-Do ==============================
-; 添加自動清背包，把東西丟到倉庫的功能
-;   添加智能丟倉功能
-;   開發清包暫停鍵
-;   開發半自動清包，適用於只需要快速找到單一物品所需要放置的倉庫頁位置
 ;============================== 靜態設置 ==============================
 global CurrentTab = 0
 ;============================== 動態設置 ==============================
@@ -94,10 +91,9 @@ Sell := ["豐裕牌組"]
     1-1. 沒有 -> 返回 1
     1-2. 有 -> 進入 2
     2. 有 buff icon 存在嗎？
-    2-1. 有 -> 返回 1
+    2-1. 有 -> 返回 2
     2-2. 沒有 -> 喝水!
-
-    開發備註: "返回 1" 是先 return 再觸發 LButton，而不是 goto!!!
+    3. 4.8 秒後回到 2
 */
 ~LButton::
     KeyWait, LButton, T0.8
@@ -115,49 +111,6 @@ Sell := ["豐裕牌組"]
             }
         }
     }
-    return
-
-; 按 F5 從城鎮進入藏身處
-F5::
-    BlockInput On
-    oldClip := clipboard
-    clipboard := "/hideout"
-    Send {Enter}
-    Sleep 2
-    SendInput ^v
-    Sleep 2
-    Send {Enter}
-    clipboard := oldClip
-    BlockInput Off
-    return
-    return
-
-; 按 F6 暫離模式
-F6::
-    BlockInput On
-    oldClip := clipboard
-    clipboard := "/afk"
-    Send {Enter}
-    Sleep 2
-    SendInput ^v
-    Sleep 2
-    Send {Enter}
-    clipboard := oldClip
-    BlockInput Off
-    return
-
-; 按 F7 修正錯位
-F7::
-    BlockInput On
-    oldClip := clipboard
-    clipboard := "/oos"
-    Send {Enter}
-    Sleep 2
-    SendInput ^v
-    Sleep 2
-    Send {Enter}
-    clipboard := oldClip
-    BlockInput Off
     return
 
 ; 按 Alt+Q 鍵開啓傳送門
@@ -238,6 +191,49 @@ F3::
 
     clipboard := oldClip
     MouseMove xx, yy
+    BlockInput Off
+    return
+
+; 按 F5 從城鎮進入藏身處
+F5::
+    BlockInput On
+    oldClip := clipboard
+    clipboard := "/hideout"
+    Send {Enter}
+    Sleep 2
+    SendInput ^v
+    Sleep 2
+    Send {Enter}
+    clipboard := oldClip
+    BlockInput Off
+    return
+    return
+
+; 按 F6 暫離模式
+F6::
+    BlockInput On
+    oldClip := clipboard
+    clipboard := "/afk"
+    Send {Enter}
+    Sleep 2
+    SendInput ^v
+    Sleep 2
+    Send {Enter}
+    clipboard := oldClip
+    BlockInput Off
+    return
+
+; 按 F7 修正錯位
+F7::
+    BlockInput On
+    oldClip := clipboard
+    clipboard := "/oos"
+    Send {Enter}
+    Sleep 2
+    SendInput ^v
+    Sleep 2
+    Send {Enter}
+    clipboard := oldClip
     BlockInput Off
     return
 
