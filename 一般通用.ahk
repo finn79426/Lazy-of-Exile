@@ -216,8 +216,13 @@ F3::
             ; Parse the item name....
             ; Send {NumN} to switch Stash Tab...
             ; Send {Click}
-            Send {Ctrl Down}{Click}{Ctrl Up}
+            Send {Ctrl Down}
             RandomSleep(56, 68)
+            Send {Click}
+            RandomSleep(56, 68)
+            Send {Ctrl Up}
+            RandomSleep(56, 68)
+
             ; Recovery clipboard
 
             Grid_Y := Inventory_Grid1_Y + (Offset_Y * A_Index)

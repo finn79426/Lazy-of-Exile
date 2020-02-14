@@ -1,4 +1,4 @@
-﻿;#IfWinActive, Path of Exile
+﻿#IfWinActive, Path of Exile
 #SingleInstance force
 #NoEnv      ; Recommended for performance and compatibility with future AutoHotkey releases.
 #Persistent ; Stay open in background
@@ -25,7 +25,7 @@ SetWorkingDir %A_ScriptDir%
 ; 滑鼠側前鍵- 號召
 ; 滑鼠側後鍵- 骸骨鎧甲
 ; 滑鼠中鍵 - 瓦爾優雅
-;============================== 邏輯 ==============================
+;=============================== 邏輯 ================================
 ; 按 End 鍵啓動此腳本，進入打怪狀態
 ; 當瀕血(35%)時，按 1 喝紅水
 ; 當血量低於 95% 時，按 23 喝堅岩藥劑(2)與翠玉藥劑(3)
@@ -34,12 +34,12 @@ SetWorkingDir %A_ScriptDir%
 ; 當旋風斬(右鍵)超過 1 秒，使用迷霧藥劑(4)
 ; 當使用暗影迷蹤(Q)，自動施放骸骨鎧甲(側後鍵)與瓦爾優雅(中鍵)
 ; 按 Alt+E 切換靈魂奉獻技能寶石
-;============================== 備註 ==============================
+;================================ 備註 ================================
 ; 自動喝水是檢測血量的顏色是否異常 (血量不是紅色就會喝)，所以黑暗挖礦不適用自動喝水
-;============================== 靜態設置 ==============================
+;=============================== 靜態設置 ==============================
 global ACTIVATED := false
 global LessensDamageBuff_Expired := true
-;============================== 動態設置 ==============================
+;=============================== 動態設置 ==============================
 ; 瀕血喝水座標設定
 global LowLife_X := 95
 global LowLife_Y := 1007
@@ -54,6 +54,8 @@ global Gem1_X := 1560
 global Gem1_Y := 189
 global Gem2_X := 1876
 global Gem2_Y := 721
+;=======================================================================
+
 
 ; 腳本啟用與關閉，快捷鍵: End
 ~End::
@@ -79,6 +81,8 @@ Flask_when_LowLife(){
 		PixelGetColor, color, LowLife_X, LowLife_Y
 		if(color != LowLife_Color){
 			Send, {1}
+
+			; Won't trigger again in 2 sec
 			Sleep 2000
 		}
 	}
@@ -91,11 +95,15 @@ Flask_when_DamgeTaken(){
 		PixelGetColor, color, LessensDamage_X, LessensDamage_Y
 		if(color != LessensDamage_Color) and (LessensDamageBuff_Expired){
 			Send, {2}
-			RandomSleep(10,50)
+			RandomSleep(56, 68)
+
 			Send, {3}
+			RandomSleep(56, 68)
 
 			LessensDamageBuff_Expired := false
-			SetTimer, WaitForFlaskCD, 4850
+
+			; Won't trigger again in 4.8 sec
+			SetTimer, WaitForFlaskCD, 4800
 		}
 	}
     return
@@ -105,10 +113,13 @@ Flask_when_DamgeTaken(){
 ~Q::
     if(ACTIVATED){
         Send, {XButton1}
-        Random, rand, 10, 50
-        Sleep rand
+        RandomSleep(56,68)
+
         Send, {MButton}
-        Sleep 500
+        RandomSleep(56,68)
+
+		; Won't trigger again in 0.5 sec
+		Sleep 500
     }
     return
 
