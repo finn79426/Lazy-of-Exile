@@ -136,13 +136,11 @@ Sell := ["豐裕牌組"]
 ; 當前物品自動歸倉
 F2::
     Keywait, F2
-    BlockInput On
 
     oldClip := clipboard
     StashItem()
     clipboard := oldClip
 
-    BlockInput Off
     return
 
 ; 背包全部自動歸倉
@@ -186,13 +184,11 @@ F3::
 ~F4::
 ResetToTab0:
     Keywait, F4
-    BlockInput On
     Loop %MaximumTab%{
         Send {Left}
         RandomSleep(56,68)
     }
     CurrentTab := 0
-    BlockInput Off
     return
 
 ; 按 F5 從城鎮進入藏身處
