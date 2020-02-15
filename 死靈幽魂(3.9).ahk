@@ -2,7 +2,7 @@
 #SingleInstance force
 #NoEnv      ; Recommended for performance and compatibility with future AutoHotkey releases.
 #Persistent ; Stay open in background
-#MaxThreadsPerHotkey 1
+#MaxThreadsPerHotkey 2
 SetBatchLines, -1
 SetKeyDelay, -1, -1
 SetMouseDelay, -1
@@ -65,6 +65,7 @@ global Gem2_Y := 721
 
 ; 腳本啟用與關閉，快捷鍵: End
 ~End::
+	KeyWait, End
     ACTIVATED := !ACTIVATED
     if(ACTIVATED){
 		ToolTip, 打怪模式已啟用
@@ -125,6 +126,7 @@ Flask_when_DamgeTaken(){
 			KeyWait, RButton, T6
 			gosub, Check_if_Still_Holding
 		}
+		return
 	}
 	return
 
