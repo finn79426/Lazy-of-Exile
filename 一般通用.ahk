@@ -136,11 +136,14 @@ global Sell := ["豐裕牌組"]
 ; 當前物品自動歸倉
 F2::
     Keywait, F2
+    ToolTip, 歸倉中...
 
     oldClip := clipboard
     StashItem()
     clipboard := oldClip
 
+    ToolTip, 歸倉完成!!!
+    SetTimer, RemoveToolTip, 1000
     return
 
 ; 背包全部自動歸倉
@@ -186,7 +189,7 @@ ResetToTab0:
     Keywait, F4
     Loop %MaximumTab%{
         Send {Left}
-        RandomSleep(56,68)
+        Sleep 1
     }
     CurrentTab := 0
     return
@@ -242,8 +245,9 @@ F12::
 ;============================== Sub-Functions ==============================
 ; 自動歸倉主程式
 StashItem(){
+    clipboard := ""
     Send ^c
-    RandomSleep(56, 68)
+    ClipWait, 0.5
 
     ; Preliminary Parse the Clipboard to Reduce CPU Performance Costs
     item := StrSplit(clipboard, "--------")[1]
@@ -291,11 +295,11 @@ StashItem(){
     }
 
     Send {Ctrl Down}
-    RandomSleep(56, 68)
+    Sleep 1
     Send {Click}
-    RandomSleep(56, 68)
+    Sleep 1
     Send {Ctrl Up}
-    RandomSleep(56, 68)
+    Sleep 1
 }
 
 ; 字典判斷，適用於清包功能
@@ -307,6 +311,34 @@ HasVal(haystack, needle) {
 			return index
 	return 0
 }
+
+; 字串判斷，適用於智能歸倉
+InStash(item, dict){
+    for k, c in dict
+        If Instr(item, c)
+            return true
+    return false
+}
+
+; 切換到指定的倉庫頁
+SwitchTab(step, direction){
+    switch direction{
+        Case "R":
+            Loop %step% {
+                Send {Right}
+                CurrentTab++
+                Sleep 1
+            }
+        Case "L":
+            Loop %step% {
+                Send {Left}
+                CurrentTab--
+                Sleep 1
+            }
+    }
+    return
+}
+
 
 RandomSleep(min,max) {
     Random, rand, %min%, %max%
