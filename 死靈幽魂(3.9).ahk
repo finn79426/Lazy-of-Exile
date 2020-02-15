@@ -116,7 +116,7 @@ Flask_when_DamgeTaken(){
 }
 
 ~RButton::
-	Send, {XButton1}		; 當按下旋風斬(右鍵)時，自動施放號召(側前鍵)
+	Send, {XButton2}		; 當按下旋風斬(右鍵)時，自動施放號召(側前鍵)
 	KeyWait, RButton, T1	; 當旋風斬(右鍵)超過 1 秒，使用迷霧藥劑(4)
 	Check_if_Still_Holding:
 	if(ErrorLevel){

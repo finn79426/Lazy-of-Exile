@@ -34,12 +34,6 @@ global CurrentTab = 0
 ; 傳送卷軸座標設定
 global PortalScroll_X=1877
 global PortalScroll_Y=824
-; 自動清包設定
-global IgnoreGrids := [58, 59, 60]  ; 略過的背包欄位
-global Inventory_Grid1_X := 1296
-global Inventory_Grid1_Y := 613
-global Offset_X := 53
-global Offset_Y := 54
 ; 倉庫頁號設定 (第一頁請設定爲 0)
 global MaximumTab := 9   ; 你有多少倉庫頁？
 global CurrencyTab := 1  ; 通貨頁
@@ -87,31 +81,33 @@ global Sell := ["豐裕牌組"]
 
 ; 當移動(左鍵)超過 0.8 秒，使用水銀藥劑(5)
 /*
-    1. 有按超過 0.8 秒？
-    1-1. 沒有 -> 返回 1
+    當按下左鍵
+
+    0. 開始計時
+    1. 左鍵有按壓超過 0.8 秒？
+    1-1. 沒有 -> 結束
     1-2. 有 -> 進入 2
     2. 有 buff icon 存在嗎？
-    2-1. 有 -> 返回 2
-    2-2. 沒有 -> 喝水!
-    3. 4.8 秒後回到 2
+    2-1. 有 -> 返回 0
+    2-2. 沒有 -> 喝水! 休息 4.8 秒後進入 3
+    3. 回到 0
 */
 ~LButton::
-    KeyWait, LButton, T0.8
-    Check_if_Still_Holding:
-    if(ErrorLevel){
-        if WinActive("Path of Exile"){
-            ImageSearch, , , BuffIconRange_P1_X, BuffIconRange_P1_Y, BuffIconRange_P2_X, BuffIconRange_P2_Y, %QuickSliver%
-            ; Check if still in buff time
-            if(ErrorLevel){
+    CheckAgain:
+	KeyWait, LButton, T0.8
+	if(ErrorLevel){
+		if WinActive("Path of Exile"){
+			ImageSearch, , , BuffIconRange_P1_X, BuffIconRange_P1_Y, BuffIconRange_P2_X, BuffIconRange_P2_Y, %QuickSliver%
+			if(ErrorLevel){
                 Send {5}
-                KeyWait, LButton, T4.8
-                gosub, Check_if_Still_Holding
-            }else if(ErrorLevel == 2){
+				Sleep 4800
+				gosub, CheckAgain
+			} else if(ErrorLevel == 2){
                 MsgBox, %QuickSliver% format error!!!
             }
-        }
-    }
-    return
+		}
+	}
+	return
 
 ; 按 Alt+Q 鍵開啓傳送門
 !Q::
@@ -146,42 +142,6 @@ F2::
     SetTimer, RemoveToolTip, 1000
     return
 
-; 背包全部自動歸倉
-F3::
-    Keywait, F3
-    BlockInput On
-    MouseGetPos xx, yy
-    oldClip := clipboard
-
-    Gosub, ResetToTab0
-    RandomSleep(56,68)
-
-    Grid_X := Inventory_Grid1_X
-    Grid_Y := Inventory_Grid1_Y
-    CurrentGrid := 0
-
-    Loop 12{
-        Loop 5{
-            MouseMove %Grid_X%, %Grid_Y%
-            CurrentGrid++
-
-            ; 檢查現在滑鼠指到的背包欄位是不是 IgnoreGrids 裡所定義的白名單欄位
-            if(HasVal(IgnoreGrids, CurrentGrid)){
-                continue
-            }
-
-            StashItem()
-
-            Grid_Y := Inventory_Grid1_Y + (Offset_Y * A_Index)
-        }
-        Grid_X := Inventory_Grid1_X + (Offset_X * A_Index)
-        Grid_Y := Inventory_Grid1_Y
-    }
-
-    clipboard := oldClip
-    MouseMove xx, yy
-    BlockInput Off
-    return
 
 ; 回到倉庫第一頁
 ~F4::
