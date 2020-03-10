@@ -3,6 +3,7 @@
 #NoEnv          ; Recommended for performance and compatibility with future AutoHotkey releases.
 #Persistent     ; Stay open in background
 #MaxThreadsPerHotkey 1
+#Include GeneralFunc.ahk
 SetBatchLines, -1
 SetKeyDelay, -1, -1
 SetMouseDelay, -1
@@ -20,10 +21,3 @@ SetWorkingDir %A_ScriptDir%
     ToolTip, x = %MouseX% `ny = %MouseY%`nColor = %color%
     SetTimer, RemoveToolTip, 10000
     return
-
-RemoveToolTip(){
-    SetTimer, RemoveToolTip, Off
-    ToolTip
-    return
-}
-

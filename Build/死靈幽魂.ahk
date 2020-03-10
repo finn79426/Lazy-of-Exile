@@ -1,8 +1,9 @@
-#IfWinActive, Path of Exile
+﻿#IfWinActive, Path of Exile
 #SingleInstance force
 #NoEnv      ; Recommended for performance and compatibility with future AutoHotkey releases.
 #Persistent ; Stay open in background
 #MaxThreadsPerHotkey 2
+#Include %A_WorkingDir%\..\GeneralFunc.ahk
 SetBatchLines, -1
 SetKeyDelay, -1, -1
 SetMouseDelay, -1
@@ -179,22 +180,3 @@ Flask_when_DamgeTaken(){
     Send {i}
   	MouseMove, xx, yy, 0
     BlockInput Off
-
-;============================== Sub-Functions ==============================
-RemoveToolTip(){
-    SetTimer, RemoveToolTip, Off
-    ToolTip
-    return
-}
-
-RandomSleep(min,max) {
-    Random, rand, %min%, %max%
-    Sleep %rand%
-    return
-}
-
-; 避免減傷水在有效時間內重複喝，且異步執行不會卡其他更重要的 Threads (例如瀕血喝水)
-WaitForFlaskCD(){
-    LessensDamage_Expire := true
-    return
-}

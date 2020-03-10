@@ -1,8 +1,9 @@
-#IfWinActive, Path of Exile
+﻿#IfWinActive, Path of Exile
 #SingleInstance force
 #NoEnv          ; Recommended for performance and compatibility with future AutoHotkey releases.
 #Persistent     ; Stay open in background
 #MaxThreadsPerHotkey 1
+#Include GeneralFunc.ahk
 SetBatchLines, -1
 SetKeyDelay, -1, -1
 SetMouseDelay, -1
@@ -295,18 +296,5 @@ SwitchTab(step, direction){
                 Sleep 1
             }
     }
-    return
-}
-
-
-RandomSleep(min,max) {
-    Random, rand, %min%, %max%
-    Sleep %rand%
-    return
-}
-
-RemoveToolTip(){
-    SetTimer, RemoveToolTip, Off
-    ToolTip
     return
 }
