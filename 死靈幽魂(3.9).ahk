@@ -1,8 +1,8 @@
-﻿#IfWinActive, Path of Exile
+#IfWinActive, Path of Exile
 #SingleInstance force
 #NoEnv      ; Recommended for performance and compatibility with future AutoHotkey releases.
 #Persistent ; Stay open in background
-#MaxThreadsPerHotkey 1
+#MaxThreadsPerHotkey 2
 SetBatchLines, -1
 SetKeyDelay, -1, -1
 SetMouseDelay, -1
@@ -65,6 +65,7 @@ global Gem2_Y := 721
 
 ; 腳本啟用與關閉，快捷鍵: End
 ~End::
+	KeyWait, End
     ACTIVATED := !ACTIVATED
     if(ACTIVATED){
 		ToolTip, 打怪模式已啟用
@@ -116,13 +117,16 @@ Flask_when_DamgeTaken(){
 }
 
 ~RButton::
-	Send, {XButton2}		; 當按下旋風斬(右鍵)時，自動施放號召(側前鍵)
-	KeyWait, RButton, T1	; 當旋風斬(右鍵)超過 1 秒，使用迷霧藥劑(4)
-	Check_if_Still_Holding:
-	if(ErrorLevel){
-		Send {4}
-		KeyWait, RButton, T6
-		gosub, Check_if_Still_Holding
+	if(ACTIVATED){
+		Send, {XButton2}		; 當按下旋風斬(右鍵)時，自動施放號召(側前鍵)
+		KeyWait, RButton, T1	; 當旋風斬(右鍵)超過 1 秒，使用迷霧藥劑(4)
+		Check_if_Still_Holding:
+		if(ErrorLevel){
+			Send {4}
+			KeyWait, RButton, T6
+			gosub, Check_if_Still_Holding
+		}
+		return
 	}
 	return
 
