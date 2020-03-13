@@ -117,6 +117,12 @@ Flask_when_DamgeTaken(){
     return
 }
 
+; 避免減傷水在有效時間內重複喝，且異步執行不會卡其他更重要的 Threads (例如瀕血喝水)
+WaitForFlaskCD(){
+    LessensDamage_Expire := true
+    return
+}
+
 ~RButton::
 	if(ACTIVATED){
 		Send, {XButton2}		; 當按下旋風斬(右鍵)時，自動施放號召(側前鍵)
