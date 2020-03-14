@@ -52,8 +52,8 @@ global OtherTab := 0     ; 不屬於上面的物品都放這一頁
 global BuffIconRange_P1_X := 0
 global BuffIconRange_P1_Y := 0
 global BuffIconRange_P2_X := 1641
-global BuffIconRange_P2_Y := 276
-global QuickSliver := "Quicksilver_Status_Icon.jpg"
+global BuffIconRange_P2_Y := 90
+global QuickSliver := "Quicksilver_Status_Icon.png"
 ;============================== 物品辨識 ==============================
 global Currencies := ["磨刀石", "知識卷軸", "混沌石", "護甲片", "卡蘭德的魔鏡", "點金石", "機會石", "後悔石", "蛻變石", "改造石", "重鑄石", "崇高石", "富豪石", "增幅石", "傳送卷軸", "玻璃彈珠", "寶石匠的稜鏡", "幻色石", "鏈結石", "工匠石", "神聖石", "祝福石", "製圖釘", "卷軸碎片", "瓦爾寶珠", "普蘭德斯金幣", "銀幣", "遺忘的污染器皿", "製圖六分儀", "無效石", "束縛石", "地平石", "神諭石", "工程石", "古變石", "魔鏡碎片"]
 
