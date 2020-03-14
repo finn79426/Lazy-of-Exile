@@ -27,7 +27,7 @@ global BuffIconRange_P1_X := 0
 global BuffIconRange_P1_Y := 0
 global BuffIconRange_P2_X := 1641
 global BuffIconRange_P2_Y := 90
-global QuickSliver := "Quicksilver_Status_Icon.png"
+global QuickSliver := "水銀藥劑_狀態.png"
 ;=====================================================================
 
 ~LButton::
