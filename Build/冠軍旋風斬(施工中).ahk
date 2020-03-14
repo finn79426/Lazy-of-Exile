@@ -21,7 +21,7 @@ SetWorkingDir %A_ScriptDir%
 ; Q 鍵 - 鮮血狂怒
 ; W 鍵 - 熔岩護盾
 ; E 鍵 - 瓦爾．先祖戰士長
-; R 鍵 - 重盾衝鋒
+; R 鍵 - 重盾衝鋒4
 ; T 鍵 - 瓦爾．熔岩護盾
 ; Ctrl + Q - 血腥沙戮
 ; Ctrl + W - 血肉骸骨
@@ -57,6 +57,9 @@ SetWorkingDir %A_ScriptDir%
 ; 過場換圖時也會因爲血量座標顏色異常而觸發自動喝水，但影響不大
 ;=============================== 靜態設置 ==============================
 global ACTIVATED := false
+global LionsRoar_Expired := true
+global SilverFlask_Expired := true
+global ManaFlask_Expired := true
 ;=============================== 動態設置 ==============================
 ; 瀕血喝水座標設定
 global LowLife_X := 95
@@ -116,8 +119,8 @@ global MoltenShell := "熔岩護盾_狀態.png"
 			RandomSleep(56,68)
 		}
 
-		KeyWait, RButton, T1	; 當旋風斬(右鍵)超過 1 秒，喝各種藥劑
 		Checkif_RButton_Still_Holding:
+		KeyWait, RButton, T1	; 當旋風斬(右鍵)超過 1 秒，喝各種藥劑
 		if(ErrorLevel){
 			gosub, Use_LionsRoar
 			gosub, Use_SilverFlask
@@ -129,35 +132,52 @@ global MoltenShell := "熔岩護盾_狀態.png"
 	return
 
 Use_LionsRoar:
-	if WinActive("Path of Exile"){
+	if LionsRoar_Expired{
 		ImageSearch, , , BuffIconRange_P1_X, BuffIconRange_P1_Y, BuffIconRange_P2_X, BuffIconRange_P2_Y, %LionsRoar%
 		if(ErrorLevel){
 			Send {2}
-			SetTimer, Use_LionsRoar, 4100
+			LionsRoar_Expired := false
+			SetTimer, WaitForLionsRoarCD, 4100
 		}
 	}
 	return
+	
+WaitForLionsRoarCD:
+	LionsRoar_Expired := true
+    return
+
 
 Use_SilverFlask:
-	if WinActive("Path of Exile"){
+	if SilverFlask_Expired{
 		ImageSearch, , , BuffIconRange_P1_X, BuffIconRange_P1_Y, BuffIconRange_P2_X, BuffIconRange_P2_Y, %SilverFlask%
 		if(ErrorLevel){
 			Send {3}
-			SetTimer, Use_SilverFlask, 6100
+			SilverFlask_Expired := false
+			SetTimer, WaitForSilverFlaskCD, 6100
 		}
 	}
 	return
+	
+WaitForSilverFlaskCD:
+	SilverFlask_Expired := true
+    return
+
 
 Use_ManaFlask:
-	if WinActive("Path of Exile"){
+	if ManaFlask_Expired{
 		ImageSearch, , , BuffIconRange_P1_X, BuffIconRange_P1_Y, BuffIconRange_P2_X, BuffIconRange_P2_Y, %ManaFlask%
 		if(ErrorLevel){
 			Send {4}
-			SetTimer, Use_ManaFlask, 5400
+			ManaFlask_Expired := false
+			SetTimer, WaitForManaFlaskCD, 5400
 		}
 	}
 	return
 
+WaitForManaFlaskCD:
+	ManaFlask_Expired := true
+    return
+	
 
 ; 當瀕血(35%)時，按 1 喝紅水
 Flask_when_LowLife(){
