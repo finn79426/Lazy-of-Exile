@@ -38,7 +38,7 @@ global QuickSliver := "水銀藥劑_狀態.png"
 			ImageSearch, , , BuffIconRange_P1_X, BuffIconRange_P1_Y, BuffIconRange_P2_X, BuffIconRange_P2_Y, %QuickSliver%
 			if(ErrorLevel){
                 Send {5}
-				RandomSleep(80, 90)
+				RandomSleep(90, 100)
 
 				ImageSearch, , , BuffIconRange_P1_X, BuffIconRange_P1_Y, BuffIconRange_P2_X, BuffIconRange_P2_Y, %QuickSliver%
 				if(ErrorLevel){
@@ -47,7 +47,7 @@ global QuickSliver := "水銀藥劑_狀態.png"
 					MsgBox, %QuickSliver% format error!!!
 				}
 
-				Sleep 4000
+				Sleep 3910
 				goto, CheckAgain
 			} else if(ErrorLevel == 2){
                 MsgBox, %QuickSliver% format error!!!
