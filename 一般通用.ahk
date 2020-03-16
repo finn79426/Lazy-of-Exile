@@ -36,16 +36,16 @@ global PortalScroll_X=1877
 global PortalScroll_Y=824
 ; 倉庫頁號設定 (第一頁請設定爲 0)
 global MaximumTab := 9   ; 你有多少倉庫頁？
-global CurrencyTab := 1  ; 通貨頁
-global MapTab := 2       ; 輿圖頁
-global EssenceTab := 3   ; 精髓頁
+global CurrencyTab := 2  ; 通貨頁
+global MapTab := 3       ; 輿圖頁
+global EssenceTab := 6   ; 精髓頁
 global CardTab := 4      ; 命運卡頁
 global FragmentTab := 5  ; 碎片頁
-global CatalystTab := 6  ; 催化劑頁
-global FossilTab := 6    ; 掘獄收藏頁
-global OilTab := 6       ; 凋落油瓶頁
-global MetamorphTab := 6 ; 鍊魔器官頁
-global RecipesTab := 6   ; 商店配方頁
+global CatalystTab := 1  ; 催化劑頁
+global FossilTab := 1    ; 掘獄收藏頁
+global OilTab := 1       ; 凋落油瓶頁
+global MetamorphTab := 1 ; 鍊魔器官頁
+global RecipesTab := 1   ; 商店配方頁
 global SellTab := 8      ; 賣場頁
 global OtherTab := 0     ; 不屬於上面的物品都放這一頁
 ; 水銀藥劑偵測設定
