@@ -17,16 +17,16 @@ SetWorkingDir %A_ScriptDir%
 ;========================== 技能面板配置 ============================
 ; 技能配置
 ; 滑鼠左鍵 - 移動
+; 滑鼠中鍵 - 熔岩護盾
 ; 滑鼠右鍵 - 旋風斬
 ; Q 鍵 - 鮮血狂怒
-; W 鍵 - 熔岩護盾
+; W 鍵 - 瓦爾．熔岩護盾
 ; E 鍵 - 瓦爾．先祖戰士長
 ; R 鍵 - 重盾衝鋒4
-; T 鍵 - 瓦爾．熔岩護盾
-; Ctrl + Q - 血腥沙戮
-; Ctrl + W - 血肉骸骨
-; Ctrl + E - 純淨之捷
-; Ctrl + R - 恐懼之旗
+; T 鍵 - 血腥沙戮
+; Ctrl + Q - 血肉骸骨
+; Ctrl + W - 純淨之捷
+; Ctrl + E - 恐懼之旗
 ; 滑鼠側前鍵 - 烈焰衝刺
 ; 1 - 禁果
 ; 2 - 獅吼精華
@@ -38,7 +38,7 @@ SetWorkingDir %A_ScriptDir%
 ; 當按下旋風斬(右鍵)時：
 ;   按鮮血狂怒(Q)
 ;		若已在鮮血狂怒持續時間內，則略過不按
-;   按熔岩護盾(T)
+;   按熔岩護盾(滑鼠中鍵)
 ;		若已在熔岩護盾持續時間內(包含瓦爾)，則略過不按
 ; 當按下旋風斬(右鍵)超過 1 秒時：
 ;   喝獅吼精華(2)
@@ -112,10 +112,10 @@ global MoltenShell := "熔岩護盾_狀態.png"
 		}
 
 
-		; 當按下旋風斬(右鍵)時，且沒有在熔岩護盾的持續時間內，自動施放熔岩護盾(T)
+		; 當按下旋風斬(右鍵)時，且沒有在熔岩護盾的持續時間內，自動施放熔岩護盾(滑鼠中鍵)
 		ImageSearch, , , BuffIconRange_P1_X, BuffIconRange_P1_Y, BuffIconRange_P2_X, BuffIconRange_P2_Y, %MoltenShell%
 		if(ErrorLevel){
-			Send, {T}
+			Send, {MButton}
 			RandomSleep(56,68)
 		}
 
