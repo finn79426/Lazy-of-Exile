@@ -49,7 +49,7 @@ SetWorkingDir %A_ScriptDir%
 ;       藥劑持續時間 6 秒 => 每 6.1 秒重新檢測一次
 ;   喝魔力藥劑(4)
 ;       若已在魔力藥劑持續時間內，則略過不喝
-;       藥劑持續時間 5.3 秒 => 每 5.4 秒重新檢測一次
+;       藥劑持續時間 4.9 秒 => 每 5.0 秒重新檢測一次
 ;   按鮮血狂怒(Q) (需要實際測試效果，有沒有硬直影響、使用效率、狂怒球持續時間等等)
 ; 按 Alt+E 切換 增大範圍 / 集中效應 輔助
 ;================================ 備註 ================================
@@ -141,7 +141,7 @@ Use_LionsRoar:
 		}
 	}
 	return
-	
+
 WaitForLionsRoarCD:
 	LionsRoar_Expired := true
     return
@@ -157,7 +157,7 @@ Use_SilverFlask:
 		}
 	}
 	return
-	
+
 WaitForSilverFlaskCD:
 	SilverFlask_Expired := true
     return
@@ -169,7 +169,7 @@ Use_ManaFlask:
 		if(ErrorLevel){
 			Send {4}
 			ManaFlask_Expired := false
-			SetTimer, WaitForManaFlaskCD, 5400
+			SetTimer, WaitForManaFlaskCD, 5000
 		}
 	}
 	return
@@ -177,7 +177,7 @@ Use_ManaFlask:
 WaitForManaFlaskCD:
 	ManaFlask_Expired := true
     return
-	
+
 
 ; 當瀕血(35%)時，按 1 喝紅水
 Flask_when_LowLife(){
