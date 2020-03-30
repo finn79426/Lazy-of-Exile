@@ -137,7 +137,7 @@ Use_LionsRoar:
 		if(ErrorLevel){
 			Send {2}
 			LionsRoar_Expired := false
-			SetTimer, WaitForLionsRoarCD, 4100
+			SetTimer, WaitForLionsRoarCD, 4900
 		}
 	}
 	return
