@@ -62,9 +62,9 @@ global SilverFlask_Expired := true
 global ManaFlask_Expired := true
 ;=============================== 動態設置 ==============================
 ; 瀕血喝水座標設定
-global LowLife_X := 95
-global LowLife_Y := 1007
-global LowLife_Color := 0x120D6E
+global LowLife_X := 119
+global LowLife_Y := 1008
+global LowLife_Color := 0x120B73
 ; 技能寶石切換設定
 global Gem1_X := 0		; 裝備座標
 global Gem1_Y := 0
