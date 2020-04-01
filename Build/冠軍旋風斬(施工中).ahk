@@ -64,7 +64,7 @@ global ManaFlask_Expired := true
 ; 瀕血喝水座標設定
 global LowLife_X := 119
 global LowLife_Y := 1008
-global LowLife_Color := 0x120B73
+global LowLife_Color := 0
 ; 技能寶石切換設定
 global Gem1_X := 0		; 裝備座標
 global Gem1_Y := 0
@@ -88,6 +88,9 @@ global MoltenShell := "熔岩護盾_狀態.png"
 	KeyWait, End
     ACTIVATED := !ACTIVATED
     if(ACTIVATED){
+		MouseGetPos, MouseX, MouseY
+		PixelGetColor, color, %MouseX%, %MouseY%
+		LowLife_Color := %color%
 		ToolTip, 打怪模式已啟用
 		SetTimer, RemoveToolTip, 5000
 	}else if(!ACTIVATED){
