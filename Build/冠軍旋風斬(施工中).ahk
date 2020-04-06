@@ -66,8 +66,8 @@ global LowLife_X := 119
 global LowLife_Y := 1008
 global LowLife_Color := 0
 ; 技能寶石切換設定
-global Gem1_X := 0		; 裝備座標
-global Gem1_Y := 0
+global Gem1_X := 1609  ; 裝備座標
+global Gem1_Y := 361
 global Gem2_X := 1876	; 背包座標
 global Gem2_Y := 721
 ; 藥劑偵測設定
@@ -85,18 +85,17 @@ global MoltenShell := "熔岩護盾_狀態.png"
 
 ; 腳本啟用與關閉，快捷鍵: End
 ~End::
-	KeyWait, End
+  KeyWait, End
     ACTIVATED := !ACTIVATED
     if(ACTIVATED){
-		MouseGetPos, MouseX, MouseY
-		PixelGetColor, color, %MouseX%, %MouseY%
-		LowLife_Color := %color%
-		ToolTip, 打怪模式已啟用
-		SetTimer, RemoveToolTip, 5000
-	}else if(!ACTIVATED){
-		ToolTip, 打怪模式已關閉
-		SetTimer, RemoveToolTip, 5000
-	}
+    	PixelGetColor, color, LowLife_X, LowLife_Y
+    	LowLife_Color = %color%
+    	ToolTip, 打怪模式已啟用
+    	SetTimer, RemoveToolTip, 5000
+  	}else if(!ACTIVATED){
+    	ToolTip, 打怪模式已關閉
+    	SetTimer, RemoveToolTip, 5000
+  	}
 
     ; 打怪模式啟用時，同時也開啓了自動喝水
     while(ACTIVATED){
